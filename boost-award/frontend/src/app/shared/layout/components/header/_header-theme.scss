@@ -1,6 +1,6 @@
 @import "~@angular/material/theming";
 
-@mixin milon-header-theme($theme, $logo, $width) {
+@mixin milon-header-theme($theme, $logo) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
@@ -13,9 +13,5 @@
 
   .milon-header {
     border-bottom: solid 1px mat-color($foreground, text, .12);
-  }
-
-  .milon-header .mat-toolbar {
-    max-width: $width;
   }
 }

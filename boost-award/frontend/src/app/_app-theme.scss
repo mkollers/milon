@@ -1,0 +1,7 @@
+@import "~@angular/material/theming";
+
+@mixin milon-app-theme($width) {
+  .milon-root main {
+    max-width: $width;
+  }
+}

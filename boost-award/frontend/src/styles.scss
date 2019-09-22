@@ -1,8 +1,10 @@
 @import './milon-theme';
+@import 'app/_app-theme';
 @import 'app/shared/layout/components/header/_header-theme';
 
 @mixin custom-theme($theme, $logo, $width) {
-    @include milon-header-theme($theme, $logo, $width);
+    @include milon-app-theme($width);
+    @include milon-header-theme($theme, $logo);
 }
 
 // Include theme styles for core and each component used in your app.

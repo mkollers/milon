@@ -1,10 +1,10 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
-
-import { AppModule } from './app.module';
-import { AppComponent } from './app.component';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 import { UniversalInterceptor } from './shared/helper/universal-interceptor';
 
 @NgModule({
@@ -20,4 +20,4 @@ import { UniversalInterceptor } from './shared/helper/universal-interceptor';
     multi: true
   }]
 })
-export class AppServerModule {}
+export class AppServerModule { }
