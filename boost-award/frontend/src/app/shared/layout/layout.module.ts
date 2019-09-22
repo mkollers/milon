@@ -5,11 +5,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
+import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
-  declarations: [HeaderComponent],
+  declarations: [
+    FooterComponent,
+    HeaderComponent
+  ],
   exports: [
+    FooterComponent,
     HeaderComponent
   ],
   imports: [
