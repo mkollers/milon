@@ -1,9 +1,16 @@
-main {
+:host {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
   display: flex;
   flex-direction: column;
-  min-height: calc(100% - 95px - 71px); // 100% - header - footer
   margin: 0 auto;
+  min-height: 100%;
+}
+
+main {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - 95px - 71px); // 100% - header - footer
 }
 
 :host ::ng-deep router-outlet+* {
