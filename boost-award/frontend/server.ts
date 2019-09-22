@@ -43,6 +43,15 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);
 
+// Redirect from www to non www
+app.get('/*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  if (req.headers.host.match(/^www/) !== null) {
+    res.redirect('https://' + req.headers.host.replace(/^www\./, '') + req.url);
+  } else {
+    next();
+  }
+});
+
 // Example Express Rest API endpoints
 // app.get('/api/**', (req, res) => { });
 // Serve static files from /browser
@@ -51,7 +60,7 @@ app.get('*.*', express.static(DIST_FOLDER, {
 }));
 
 // All regular routes use the Universal engine
-app.get('*', (req, res) => {
+app.get('*', (req: express.Request, res: express.Response) => {
   res.render('index', { req });
 });
 
