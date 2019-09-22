@@ -10,7 +10,7 @@ import { LayoutModule } from './shared/layout/layout.module';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
 
     // Custom
