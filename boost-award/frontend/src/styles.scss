@@ -1,1 +1,59 @@
+@import './milon-theme';
+@import 'app/shared/layout/components/header/_header-theme';
+
+@mixin custom-theme($theme, $logo, $width) {
+    @include milon-header-theme($theme, $logo, $width);
+}
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($milon-theme);
+@include custom-theme($milon-theme, '/assets/logo.svg', 1140px);
+
+// colors
+$primary: map-get($milon-theme, primary);
+$accent: map-get($milon-theme, accent);
+$warn: map-get($milon-theme, warn);
+$background: map-get($milon-theme, background);
+$foreground: map-get($milon-theme, foreground);
+
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+    font-size: 16px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    color: mat-color($primary, 500);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+p {
+    line-height: 1.5rem;
+    text-align: justify;
+}
+
+.mat-button {
+    text-transform: uppercase;
+}
+
+.mat-button.mat-primary {
+    font-weight: 500;
+}

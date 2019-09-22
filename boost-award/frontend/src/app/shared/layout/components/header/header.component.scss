@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.mat-toolbar {
+  background: transparent;
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  margin: 0 auto;
+}
+
+.logo-wrapper {
+  flex: 0 1 100%;
+}
+
+#logo {
+  -webkit-tap-highlight-color: transparent;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  display: block;
+  height: 24px;
+  margin: 0 auto;
+  outline: none;
+  width: 176px;
+}

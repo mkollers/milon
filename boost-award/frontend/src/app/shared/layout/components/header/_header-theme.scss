@@ -1,0 +1,21 @@
+@import "~@angular/material/theming";
+
+@mixin milon-header-theme($theme, $logo, $width) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .milon-header #logo {
+    background-image: url($logo);
+  }
+
+  .milon-header {
+    border-bottom: solid 1px mat-color($foreground, text, .12);
+  }
+
+  .milon-header .mat-toolbar {
+    max-width: $width;
+  }
+}
