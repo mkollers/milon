@@ -9,7 +9,7 @@
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($milon-theme);
-@include custom-theme($milon-theme, '/assets/logo.svg', 1140px);
+@include custom-theme($milon-theme, '/assets/logo.png', 1430px);
 
 // colors
 $primary: map-get($milon-theme, primary);
