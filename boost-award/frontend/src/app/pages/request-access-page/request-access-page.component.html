@@ -1,0 +1,12 @@
+<h1>Herzlich willkommen,</h1>
+<p>
+  zum BOOST Award. Nach Angabe Ihrer E-Mail Adresse senden wir Ihnen einen Link zu, welcher Ihnen
+  den Zugang zur Abstimmung ermöglicht.
+</p>
+<form [formGroup]="fg" (ngSubmit)="fg.valid && submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>E-Mail Adresse</mat-label>
+    <input matInput formControlName="email" autocomplete="email" required>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Zugang anfordern</button>
+</form>
