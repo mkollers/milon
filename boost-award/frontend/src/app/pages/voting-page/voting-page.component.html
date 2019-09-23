@@ -1,18 +1,14 @@
 <h1>Herzlich willkommen,</h1>
-<section fxLayout="row" fxLayoutGap="16px">
-  <section>
-    <p>zur Abstimmung zum BOOST Award 2019. Bitte wählen Sie die Plätze 1 bis 3 aus. IHRE STIMME ZÄHLT!
-    </p>
-  </section>
-</section>
+<p>zur Abstimmung zum BOOST Award 2019. Bitte wählen Sie die Plätze 1 bis 3 aus. IHRE STIMME ZÄHLT!
+</p>
 
 <ng-container *ngIf="voted$ | async">
   <section class="finish">
-    <button (click)="finish()" fxHide.lt-md fxShow color="primary" mat-raised-button>
+    <button (click)="finish()" color="primary" mat-raised-button class="desktop">
       <mat-icon>&#xe877;</mat-icon>&nbsp;Hier klicken um die Abstimmung abzuschließen.
     </button>
   </section>
-  <button (click)="finish()" mat-fab fxHide fxShow.lt-sm>
+  <button (click)="finish()" mat-fab class="finish-mobile">
     <mat-icon>&#xe877;</mat-icon>
   </button>
 </ng-container>

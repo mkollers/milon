@@ -1,0 +1,40 @@
+@import '~@angular/cdk/overlay-prebuilt.css';
+@import '../../../styles/breakpoints';
+
+:host {
+  flex-direction: column;
+}
+
+.finish {
+  position: fixed;
+  right: 24px;
+  bottom: 80px;
+  max-width: 350px;
+}
+
+@media #{$mat-xs} {
+    .finish .desktop {
+        display: none;
+    }
+}
+
+@media #{$mat-gt-xs} {
+    .finish-mobile {
+        display: none;
+    }
+}
+
+.mat-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+}
+
+.finish-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .5);
+}
