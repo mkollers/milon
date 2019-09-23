@@ -28,9 +28,16 @@ export class RequestAccessPageComponent {
       await this._accessTokenService.register(email);
       this._snackbar.open('Wir haben Ihnen soeben eine E-Mail gesendet.', '', { duration: 15000 });
     } catch (err) {
-      console.error(err);
-      const message = 'Hoppla, da ist etwas schief gelaufen...';
-      this._snackbar.open(message, '', { duration: 15000 });
+      let message = 'Hoppla, da ist etwas schief gelaufen...';
+      switch (err.code) {
+        case 'permission-denied':
+          message = 'Die E-Mail ist gerade auf dem Weg zu Ihnen.';
+          break;
+        default:
+          console.error(err);
+          break;
+      }
+      this._snackbar.open(message, '', { duration: 10000 });
     }
   }
 

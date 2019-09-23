@@ -6,10 +6,10 @@ export const OnRegistrationWrite = functions
     .region('europe-west1')
     .firestore
     .document('registrations/{email}')
-    .onWrite(async (event, context) => {
+    .onCreate(async (event, context) => {
         try {
             const email: string = context.params.email;
-            const data = event.after.data();
+            const data = event.data();
             if (!data) {
                 console.warn(`Registration for ${email} does not exist. Skipping function execution`);
                 return;
@@ -17,7 +17,7 @@ export const OnRegistrationWrite = functions
             const url = data.url;
             const token = await createAccessToken(email);
             await sendMail(email, url, token)
-            // TODO: Delete previous tokens
+            await deleteRegistration(email);
         } catch (err) {
             console.error(err)
         }
@@ -25,11 +25,28 @@ export const OnRegistrationWrite = functions
 
 async function createAccessToken(email: string) {
     const db = admin.firestore();
-    const doc = await db.collection('access_tokens').add({
+
+    let data: any = {
         email,
         created: new Date().toUTCString()
-    });
+    };
+
+    // Copy data from previous token
+    const snapshot = await db.collection('access_tokens').where('email', '==', email).get();    
+    if (!snapshot.empty) {
+        if (snapshot.size > 1) {
+            console.warn(`Found more than one token for ${email}`);
+        }        
+        data = { ...snapshot.docs[0].data(), updated: new Date().toUTCString() };
+        await db.collection('access_tokens').doc(snapshot.docs[0].id).delete();
+    }
+    const doc = await db.collection('access_tokens').add(data);
     return doc.id;
+}
+
+async function deleteRegistration(email: string) {
+    const db = admin.firestore();
+    await db.collection('registrations').doc(email).delete();
 }
 
 function sendMail(email: string, url: string, token: string) {
