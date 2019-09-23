@@ -11,7 +11,7 @@
     "compile:server": "webpack --config webpack.server.config.js --no-progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --prod --no-progress && ng run boost-award:server:production --bundleDependencies all"
+    "build:client-and-server-bundles": "ng build --prod --no-progress && ng run boost-award:server:production --bundleDependencies none"
   },
   "private": true,
   "dependencies": {
