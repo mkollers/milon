@@ -1,5 +1,5 @@
-import { CreateOneTimeLink } from "./functions/create-one-time-link";
+import { OnRegistrationWrite } from "./functions/on-registration-write";
 import { initialize } from "./initialize";
 
 initialize();
-exports.createOneTimeLink = CreateOneTimeLink;
+exports.OnRegistrationWrite = OnRegistrationWrite;
