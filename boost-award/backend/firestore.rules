@@ -8,6 +8,22 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
+    // True if the access token is not older than 4 hours
+    function signedInOrPublic() {
+      return request.time.date() < (resource.data.created + duration.time(4, 0, 0, 0)) || request.time.date() < (resource.data.updated + duration.time(4, 0, 0, 0));
+    }
+
+    match /access_tokens {
+      allow read, write: if false;
+    }
+    match /access_tokens/{token} {
+      allow read: if signedInOrPublic();
+      allow write: if false;
+    }
+    match /access_tokens/{token}/votes {
+      allow read, write: if signedInOrPublic();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
