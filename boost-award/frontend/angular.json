@@ -35,10 +35,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -130,10 +126,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
               "sourceMap": false,
               "optimization": {
                 "scripts": false,
