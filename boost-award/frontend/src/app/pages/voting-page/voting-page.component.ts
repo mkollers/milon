@@ -37,7 +37,7 @@ export class VotingPageComponent {
     const token = localStorage.getItem('token');
     const token$ = this._route.data.pipe(map(data => data.token));
     const hotToken$ = this._accessTokenService.getByToken(token).pipe(skip(1));
-    return merge(token$, hotToken$).pipe(tap(console.log));
+    return merge(token$, hotToken$);
   }
 
   private _queryParticipants() {

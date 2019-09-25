@@ -20,7 +20,6 @@ export class AccessTokenService {
   }
 
   getByToken(token: string) {
-    console.log(token);
     return this._db.doc<Token>(`access_tokens/${token}`)
       .snapshotChanges().pipe(
         map(snapshot => {
