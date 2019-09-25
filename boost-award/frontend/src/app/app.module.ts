@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LayoutModule } from './shared/layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { LayoutModule } from './shared/layout/layout.module';
     AngularFirestoreModule,
 
     // Custom
-    LayoutModule,
     LoadingOverlayModule
   ],
   providers: [],
