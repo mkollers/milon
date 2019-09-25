@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Participant } from '@shared/data-access/models/participant';
 import { Token } from '@shared/data-access/models/token';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
+import { ParticipantService } from '@shared/data-access/services/participant.service';
 import { merge, Observable } from 'rxjs';
-import { map, skip } from 'rxjs/operators';
+import { map, skip, startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'milon-voting-page',
@@ -13,7 +15,7 @@ import { map, skip } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VotingPageComponent {
-  // participants$: Observable<Participant[]>;
+  participants$: Observable<Participant[]>;
   token$: Observable<Token>;
   voted$: Observable<boolean>;
   votes$: Observable<{ [id: string]: number }>;
@@ -21,44 +23,41 @@ export class VotingPageComponent {
 
   constructor(
     private _accessTokenService: AccessTokenService,
+    private _participantService: ParticipantService,
     private _route: ActivatedRoute,
     private _snackbar: MatSnackBar
   ) {
     this.token$ = this._queryToken();
-    this._queryParticipants();
-    this._queryVotes();
-    this._queryVoted();
+    this.participants$ = this._queryParticipants();
+    this.votes$ = this._queryVotes();
+    this.voted$ = this._queryVoted();
   }
 
   private _queryToken() {
     const token = localStorage.getItem('token');
-    const tokenData$ = this._route.data.pipe(map(data => data.token));
-    const hotTokenData$ = this._accessTokenService.getByToken(token).pipe(skip(1));
-    return merge(tokenData$, hotTokenData$);
+    const token$ = this._route.data.pipe(map(data => data.token));
+    const hotToken$ = this._accessTokenService.getByToken(token).pipe(skip(1));
+    return merge(token$, hotToken$).pipe(tap(console.log));
   }
 
   private _queryParticipants() {
-    // const companies$ = route.data.pipe(map(data => data.companies));
-    //     const hotCompanies$ = companyService.getAll();
-    //     this.companies$ = merge(companies$, hotCompanies$);
+    const participants$ = this._route.data.pipe(map(data => data.participants));
+    const hotParticipants$ = this._participantService.getAll();
+    return merge(participants$, hotParticipants$);
   }
 
-  private _queryVotes() {
-    // this.votes$ = this.token$.pipe(
-    //   map(data => data.votes || {})
-    // );
-  }
+  private _queryVotes = () => this.token$.pipe(map(data => data.votes || {}));
 
   private _queryVoted() {
-    // const points$ = this.votes$.pipe(
-    //   map(votes => Object.values(votes)),
-    //   map(values => values.reduce((a, b) => a + b, 0)),
-    //   startWith(0)
-    // );
+    const points$ = this.votes$.pipe(
+      map(votes => Object.values(votes)),
+      map(values => values.reduce((a, b) => a + b, 0)),
+      startWith(0)
+    );
 
-    // this.voted$ = points$.pipe(
-    //   map(p => p >= 6)
-    // );
+    return points$.pipe(
+      map(p => p >= 6)
+    );
   }
 
   finish() {

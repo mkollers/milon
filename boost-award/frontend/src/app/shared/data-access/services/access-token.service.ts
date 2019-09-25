@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { Token } from '../models/token';
 
@@ -20,11 +20,10 @@ export class AccessTokenService {
   }
 
   getByToken(token: string) {
-    return this._db
-      .collection('access_tokens')
-      .doc(token)
+    console.log(token);
+    return this._db.doc<Token>(`access_tokens/${token}`)
       .snapshotChanges().pipe(
-        map<any, Token>(snapshot => {
+        map(snapshot => {
           if (!snapshot.payload.exists) {
             return undefined;
           }

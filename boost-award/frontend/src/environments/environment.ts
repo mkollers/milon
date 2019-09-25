@@ -9,7 +9,7 @@ export const environment = {
     authDomain: 'milon-industries-gmbh.firebaseapp.com',
     databaseURL: 'https://milon-industries-gmbh.firebaseio.com',
     projectId: 'milon-industries-gmbh',
-    storageBucket: '',
+    storageBucket: 'milon-industries-gmbh.appspot.com',
     messagingSenderId: '717365310389',
     appId: '1:717365310389:web:c02ca7006e686c78e31ffc'
   }

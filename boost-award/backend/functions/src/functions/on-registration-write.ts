@@ -25,19 +25,23 @@ export const OnRegistrationWrite = functions
 
 async function createAccessToken(email: string) {
     const db = admin.firestore();
+    const now = new Date();
 
     let data: any = {
         email,
-        created: new Date().toUTCString()
+        created: admin.firestore.Timestamp.fromDate(now)
     };
 
     // Copy data from previous token
-    const snapshot = await db.collection('access_tokens').where('email', '==', email).get();    
+    const snapshot = await db.collection('access_tokens').where('email', '==', email).get();
     if (!snapshot.empty) {
         if (snapshot.size > 1) {
             console.warn(`Found more than one token for ${email}`);
-        }        
-        data = { ...snapshot.docs[0].data(), updated: new Date().toUTCString() };
+        }
+        data = {
+            ...snapshot.docs[0].data(),
+            updated: admin.firestore.Timestamp.fromDate(now)
+        };
         await db.collection('access_tokens').doc(snapshot.docs[0].id).delete();
     }
     const doc = await db.collection('access_tokens').add(data);
