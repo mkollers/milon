@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,9 @@ import { AppComponent } from './app.component';
     // Firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+
+    // Material
+    MatSnackBarModule, // Required for ValidTokenGuard
 
     // Custom
     LoadingOverlayModule
