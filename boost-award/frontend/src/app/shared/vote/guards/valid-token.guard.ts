@@ -39,9 +39,11 @@ export class ValidTokenGuard implements CanActivate {
 
     const now = new Date();
     const created = new Date(data.created);
-    const hoursDif = (now.getTime() - created.getTime()) / 1000 / 60 / 60;
+    const updated = new Date(data.updated);
+    const hoursDifCreated = (now.getTime() - created.getTime()) / 1000 / 60 / 60;
+    const hoursDifUpdated = (now.getTime() - updated.getTime()) / 1000 / 60 / 60;
 
-    if (hoursDif > 4) {
+    if (hoursDifCreated > 4 && hoursDifUpdated > 4) {
       this._snackbar.open('Ihr Link ist leider abgelaufen. Bitte lassen Sie sich eine neue E-Mail zuschicken.', '', { duration: 20000 });
       this._router.navigate(['/']);
       return false;
