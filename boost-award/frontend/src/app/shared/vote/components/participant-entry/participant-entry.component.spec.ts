@@ -1,6 +1,8 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ParticipantEntryComponent } from './participant-entry.component';
+import { SafePipe } from '@shared/helper/pipes/safe.pipe';
 
 describe('ParticipantEntryComponent', () => {
   let component: ParticipantEntryComponent;
@@ -8,9 +10,10 @@ describe('ParticipantEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParticipantEntryComponent ]
+      declarations: [ParticipantEntryComponent, SafePipe],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

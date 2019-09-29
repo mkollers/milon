@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Participant } from '@shared/data-access/models/participant';
@@ -6,8 +6,7 @@ import { Token } from '@shared/data-access/models/token';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
 import { ParticipantService } from '@shared/data-access/services/participant.service';
 import { merge, Observable } from 'rxjs';
-import { map, skip, startWith, tap, first } from 'rxjs/operators';
-import { Map } from 'immutable';
+import { first, map, skip, startWith, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'milon-voting-page',
@@ -60,7 +59,10 @@ export class VotingPageComponent {
     return merge(participants$, hotParticipants$);
   }
 
-  private _queryVotes = () => this.token$.pipe(map(data => data.votes || {}));
+  private _queryVotes = () => this.token$.pipe(
+    filter(data => !!data),
+    map(data => data.votes || {})
+  )
 
   private _queryVoted() {
     const points$ = this.votes$.pipe(
@@ -75,7 +77,6 @@ export class VotingPageComponent {
   }
 
   finish() {
-    // this._snackbar.openFromComponent(FinishSnackComponent);
     this.finished = true;
   }
 }

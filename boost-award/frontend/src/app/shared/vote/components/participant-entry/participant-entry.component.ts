@@ -21,13 +21,7 @@ export class ParticipantEntryComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.votes && this.buttonToggleGroup) {
-      // const value = this.buttonToggleGroup.value;
       this.value = +findKey(this.votes, v => v === this.participant.id);
-
-      // if another participant takes the same place, reset the value
-      // if (this.votes[value] !== this.participant.id) {
-      //   this.buttonToggleGroup.writeValue(undefined);
-      // }
     }
   }
 }

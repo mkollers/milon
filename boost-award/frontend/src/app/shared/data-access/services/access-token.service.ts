@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Map } from 'immutable';
 import { map } from 'rxjs/operators';
 
 import { Token } from '../models/token';
