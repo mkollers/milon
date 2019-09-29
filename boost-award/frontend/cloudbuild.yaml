@@ -7,6 +7,11 @@ steps:
 
   # Build productive files
   - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: [ 'run', 'test' ]
+    dir: 'boost-award/frontend'
+
+  # Build productive files
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
     args: [ 'run', 'build:ssr' ]
     dir: 'boost-award/frontend'
 
