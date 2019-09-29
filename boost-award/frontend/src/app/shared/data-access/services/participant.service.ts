@@ -16,7 +16,7 @@ export class ParticipantService {
   ) { }
 
   getAll(): Observable<Participant[]> {
-    return this._db.collection('participants', ref => ref.orderBy('name'))
+    return this._db.collection('participants')
       .snapshotChanges().pipe(
         map<any[], Participant[]>(snapshots => snapshots.map(s => ({ id: s.payload.doc.id, ...s.payload.doc.data() }))),
         map(participants => shuffle(participants))

@@ -1,10 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { HelperModule } from '@shared/helper/helper.module';
+
+import { ParticipantEntryComponent } from './components/participant-entry/participant-entry.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [ParticipantEntryComponent],
+  exports: [ParticipantEntryComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    HelperModule
   ]
 })
 export class VoteModule { }

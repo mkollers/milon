@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { VoteModule } from '@shared/vote/vote.module';
 
 import { VotingPageRoutingModule } from './voting-page-routing.module';
 import { VotingPageComponent } from './voting-page.component';
@@ -16,7 +17,10 @@ import { VotingPageComponent } from './voting-page.component';
     // Material
     MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+
+    // Custom
+    VoteModule
   ]
 })
 export class VotingPageModule { }

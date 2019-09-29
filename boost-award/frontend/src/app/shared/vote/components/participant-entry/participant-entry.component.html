@@ -1,0 +1,4 @@
+<h2>{{ participant.name }}</h2>
+<iframe *ngIf="participant.video" [src]="participant.video | safe: 'resourceUrl'" frameborder="0"
+  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p *ngIf="participant.description" [innerHTML]="participant.description | safe: 'html'"></p>

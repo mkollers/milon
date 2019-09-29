@@ -2,6 +2,10 @@
 <p>zur Abstimmung zum BOOST Award 2019. Bitte wählen Sie die Plätze 1 bis 3 aus. IHRE STIMME ZÄHLT!
 </p>
 
+<ng-container *ngFor="let participant of participants$ | async">
+  <milon-participant-entry [milon-participant]="participant"></milon-participant-entry>
+</ng-container>
+
 <ng-container *ngIf="voted$ | async">
   <section class="finish">
     <button (click)="finish()" color="primary" mat-raised-button class="desktop">
