@@ -29,7 +29,8 @@ async function createAccessToken(email: string) {
 
     let data: any = {
         email,
-        created: admin.firestore.Timestamp.fromDate(now)
+        created: now.toISOString(),
+        createdTimestamp: admin.firestore.Timestamp.fromDate(now).seconds
     };
 
     // Copy data from previous token
@@ -40,7 +41,8 @@ async function createAccessToken(email: string) {
         }
         data = {
             ...snapshot.docs[0].data(),
-            updated: admin.firestore.Timestamp.fromDate(now)
+            updated: now.toISOString(),
+            updatedTimestamp: admin.firestore.Timestamp.fromDate(now).seconds
         };
         await db.collection('access_tokens').doc(snapshot.docs[0].id).delete();
     }

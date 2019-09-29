@@ -10,8 +10,7 @@ service cloud.firestore {
 
     // True if the access token is not older than 4 hours
     function tokenStillValid() {
-      // 4 hours = 4 x 60 mins x 60 secs
-      return request.time.toMillis() < (resource.data.created.seconds + 4 * 60 * 60) * 1000 || request.time.toMillis() < (resource.data.updatedTimestamp + 4 * 60 * 60) * 1000;
+      return request.time.toMillis() < (resource.data.createdTimestamp + duration.value(4, 'h').seconds()) * 1000 || request.time.toMillis() < (resource.data.updatedTimestamp + duration.value(4, 'h').seconds()) * 1000;
     }
 
     match /access_tokens {

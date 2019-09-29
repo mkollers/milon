@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
 import { first } from 'rxjs/operators';
+import { Token } from '@shared/data-access/models/token';
 
 @Injectable({
   providedIn: 'root'
@@ -25,26 +26,27 @@ export class ValidTokenGuard implements CanActivate {
       return false;
     }
 
-    const data = await this._accessTokenService.getByToken(token).pipe(
-      first()
-    ).toPromise();
-
-    if (!data) {
-      this._snackbar.open('Es konnte kein gültiger Token gefunden werden. Bitte lassen Sie sich eine neue E-Mail zuschicken.', '',
-        { duration: 20000 }
-      );
+    let data: Token;
+    try {
+      data = await this._accessTokenService.getByToken(token).pipe(
+        first()
+      ).toPromise();
+    } catch (err) {
+      let msg = 'Es konnte kein gültiger Token gefunden werden. Bitte lassen Sie sich eine neue E-Mail zuschicken.';
+      switch (err.code) {
+        case 'permission-denied':
+          msg = 'Ihr Link ist leider abgelaufen. Bitte lassen Sie sich eine neue E-Mail zuschicken.';
+          break;
+      }
+      this._snackbar.open(msg, '', { duration: 20000 });
       this._router.navigate(['/']);
       return false;
     }
 
-    const now = new Date();
-    const created = new Date(data.created);
-    const updated = new Date(data.updated);
-    const hoursDifCreated = (now.getTime() - created.getTime()) / 1000 / 60 / 60;
-    const hoursDifUpdated = (now.getTime() - updated.getTime()) / 1000 / 60 / 60;
-
-    if (hoursDifCreated > 4 && hoursDifUpdated > 4) {
-      this._snackbar.open('Ihr Link ist leider abgelaufen. Bitte lassen Sie sich eine neue E-Mail zuschicken.', '', { duration: 20000 });
+    if (!data) {
+      this._snackbar.open('Es konnte kein gültiger Token gefunden werden. Bitte lassen Sie sich eine neue E-Mail zuschicken.', '', {
+        duration: 20000
+      });
       this._router.navigate(['/']);
       return false;
     }
