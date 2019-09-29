@@ -16,7 +16,7 @@ export class AccessTokenService {
     return this._db
       .collection('registrations')
       .doc(email)
-      .set({ url: `${window.location.origin}/vote` });
+      .set({ url: 'https://www.boostaward.de/abstimmung/' });
   }
 
   getByToken(token: string) {
