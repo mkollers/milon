@@ -1,12 +1,16 @@
-.details {
+@import '../../../../../styles/breakpoints';
+
+@media #{$mat-gt-sm} {
+  .details {
     display: flex;
     flex-direction: row;
-}
+  }
 
-.details iframe {
+  .details iframe {
     margin-right: 16px;
-}
+  }
 
-.details p {
+  .details p {
     margin: 0;
+  }
 }
