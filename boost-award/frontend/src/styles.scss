@@ -2,7 +2,7 @@
 @import 'app/_app-theme';
 
 @mixin custom-theme($theme, $logo, $width) {
-    @include milon-app-theme($width);
+  @include milon-app-theme($width);
 }
 
 // Include theme styles for core and each component used in your app.
@@ -21,31 +21,34 @@ $foreground: map-get($milon-theme, foreground);
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
-    height: 100%;
-    font-size: 16px;
+  height: 100%;
+  font-size: 16px;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 a {
-    color: mat-color($primary, 500);
+  color: mat-color($primary, 500);
 }
 
 .uppercase {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 h1 {
-    font-weight: 400;
+  color: mat-color($primary, 500);
+  font-size: 2.625rem;
+  font-style: italic;
+  font-weight: 700;
 }
 
 p {
-    line-height: 1.5rem;
-    text-align: justify;
+  line-height: 1.5rem;
+  text-align: justify;
 }
