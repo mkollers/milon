@@ -3,5 +3,5 @@ export interface Token {
     created: string;
     updated?: string;
     email: string;
-    votes: { [id: string]: number };
+    votes: { [points: number]: string };
 }

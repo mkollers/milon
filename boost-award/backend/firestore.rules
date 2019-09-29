@@ -17,11 +17,8 @@ service cloud.firestore {
       allow read, write: if false;
     }
     match /access_tokens/{token} {
-      allow read: if tokenStillValid();
-      allow write: if false;
-    }
-    match /access_tokens/{token}/votes {
-      allow read, write: if tokenStillValid();
+      allow read, update: if tokenStillValid();
+      allow create, delete: if false;
     }
 
     match /participants {

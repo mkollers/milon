@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Participant } from '@shared/data-access/models/participant';
-import { Map } from 'immutable';
+import findKey from 'lodash/findKey';
 
 @Component({
   selector: 'milon-participant-entry',
@@ -11,8 +11,9 @@ import { Map } from 'immutable';
 })
 export class ParticipantEntryComponent implements OnChanges {
   @Input('milon-participant') participant: Participant;
-  @Input('milon-votes') votes: Map<number, string>;
+  @Input('milon-votes') votes: { [points: number]: string };
   @Output('milon-vote') vote$ = new EventEmitter<number>();
+  value: number;
 
   @ViewChild(MatButtonToggleGroup, { static: true }) buttonToggleGroup: MatButtonToggleGroup;
 
@@ -20,12 +21,13 @@ export class ParticipantEntryComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.votes && this.buttonToggleGroup) {
-      const value = this.buttonToggleGroup.value;
+      // const value = this.buttonToggleGroup.value;
+      this.value = +findKey(this.votes, v => v === this.participant.id);
 
       // if another participant takes the same place, reset the value
-      if (this.votes.get(value) !== this.participant.id) {
-        this.buttonToggleGroup.writeValue(undefined);
-      }
+      // if (this.votes[value] !== this.participant.id) {
+      //   this.buttonToggleGroup.writeValue(undefined);
+      // }
     }
   }
 }

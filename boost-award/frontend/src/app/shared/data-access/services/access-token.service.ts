@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, tap } from 'rxjs/operators';
+import { Map } from 'immutable';
+import { map } from 'rxjs/operators';
 
 import { Token } from '../models/token';
 
@@ -29,5 +30,14 @@ export class AccessTokenService {
           return { key: snapshot.payload.id, ...snapshot.payload.data() };
         })
       );
+  }
+
+  async vote(token: string, votes: { [points: number]: string }) {
+    return this._db
+      .collection('access_tokens')
+      .doc(token)
+      .update({
+        votes
+      });
   }
 }

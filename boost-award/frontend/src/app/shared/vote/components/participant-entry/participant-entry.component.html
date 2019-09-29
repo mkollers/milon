@@ -5,7 +5,7 @@
   <p *ngIf="participant.description" [innerHTML]="participant.description | safe: 'html'"></p>
 </section>
 
-<mat-button-toggle-group name="Platzierung" aria-label="Platzierung" (change)="vote$.emit($event.value)">
+<mat-button-toggle-group name="Platzierung" aria-label="Platzierung" (change)="vote$.emit($event.value)" [value]="value">
   <mat-button-toggle [value]="3">Platz 1</mat-button-toggle>
   <mat-button-toggle [value]="2">Platz 2</mat-button-toggle>
   <mat-button-toggle [value]="1">Platz 3</mat-button-toggle>

@@ -6,7 +6,7 @@ import { Token } from '@shared/data-access/models/token';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
 import { ParticipantService } from '@shared/data-access/services/participant.service';
 import { merge, Observable } from 'rxjs';
-import { map, skip, startWith, tap } from 'rxjs/operators';
+import { map, skip, startWith, tap, first } from 'rxjs/operators';
 import { Map } from 'immutable';
 
 @Component({
@@ -19,9 +19,8 @@ export class VotingPageComponent {
   participants$: Observable<Participant[]>;
   token$: Observable<Token>;
   voted$: Observable<boolean>;
-  votes$: Observable<{ [id: string]: number }>;
+  votes$: Observable<{ [id: number]: string }>;
   finished = false;
-  votes = Map<number, string>();
 
   constructor(
     private _accessTokenService: AccessTokenService,
@@ -35,14 +34,17 @@ export class VotingPageComponent {
     this.voted$ = this._queryVoted();
   }
 
-  vote(participant: Participant, points: number) {
+  async vote(participant: Participant, points: number) {
+    const votes = await this.votes$.pipe(first()).toPromise();
     for (let i = 1; i <= 3; i++) {
       if (i === points) {
-        this.votes = this.votes.set(i, participant.id);
-      } else if (this.votes.get(i) === participant.id) {
-        this.votes = this.votes.set(i, undefined);
+        votes[i] = participant.id;
+      } else if (votes[i] === participant.id) {
+        delete votes[i];
       }
     }
+    const token = localStorage.getItem('token');
+    await this._accessTokenService.vote(token, votes);
   }
 
   private _queryToken() {
@@ -62,8 +64,8 @@ export class VotingPageComponent {
 
   private _queryVoted() {
     const points$ = this.votes$.pipe(
-      map(votes => Object.values(votes)),
-      map(values => values.reduce((a, b) => a + b, 0)),
+      map(votes => Object.keys(votes)),
+      map(keys => keys.reduce((a, b) => +a + +b, 0)),
       startWith(0)
     );
 
