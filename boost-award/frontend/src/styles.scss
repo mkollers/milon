@@ -41,11 +41,18 @@ a {
   text-transform: uppercase;
 }
 
-h1 {
+h1, h2, h3, h4 {
   color: mat-color($primary, 500);
-  font-size: 2.625rem;
   font-style: italic;
   font-weight: 700;
+}
+
+h1 {
+  font-size: 2.625rem;
+}
+
+h2 {
+  font-size: 1.875rem;
 }
 
 p {
