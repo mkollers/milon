@@ -4,7 +4,7 @@
 </p>
 
 <ng-container *ngFor="let participant of participants$ | async">
-  <milon-participant-entry [milon-participant]="participant"></milon-participant-entry>
+  <milon-participant-entry [milon-participant]="participant" (milon-vote)="vote(participant, $event)" [milon-votes]="votes"></milon-participant-entry>
 </ng-container>
 
 <ng-container *ngIf="voted$ | async">

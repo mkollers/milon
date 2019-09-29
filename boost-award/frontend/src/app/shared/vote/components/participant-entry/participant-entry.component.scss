@@ -14,3 +14,15 @@
     margin: 0;
   }
 }
+
+.mat-button-toggle-group {
+  margin-top: 16px;
+}
+
+:host ::ng-deep .mat-button-toggle-checked {
+  background: #214d4e;
+}
+
+:host ::ng-deep .mat-button-toggle-checked button {
+  color: #fff;
+}

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Participant } from '@shared/data-access/models/participant';
@@ -7,6 +7,7 @@ import { AccessTokenService } from '@shared/data-access/services/access-token.se
 import { ParticipantService } from '@shared/data-access/services/participant.service';
 import { merge, Observable } from 'rxjs';
 import { map, skip, startWith, tap } from 'rxjs/operators';
+import { Map } from 'immutable';
 
 @Component({
   selector: 'milon-voting-page',
@@ -20,6 +21,7 @@ export class VotingPageComponent {
   voted$: Observable<boolean>;
   votes$: Observable<{ [id: string]: number }>;
   finished = false;
+  votes = Map<number, string>();
 
   constructor(
     private _accessTokenService: AccessTokenService,
@@ -31,6 +33,16 @@ export class VotingPageComponent {
     this.participants$ = this._queryParticipants();
     this.votes$ = this._queryVotes();
     this.voted$ = this._queryVoted();
+  }
+
+  vote(participant: Participant, points: number) {
+    for (let i = 1; i <= 3; i++) {
+      if (i === points) {
+        this.votes = this.votes.set(i, participant.id);
+      } else if (this.votes.get(i) === participant.id) {
+        this.votes = this.votes.set(i, undefined);
+      }
+    }
   }
 
   private _queryToken() {
