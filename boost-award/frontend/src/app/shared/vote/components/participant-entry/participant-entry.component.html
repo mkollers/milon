@@ -1,12 +1,18 @@
 <h2>{{ participant?.name }}</h2>
 <section class="details">
-  <iframe *ngIf="participant?.video" [src]="participant.video | safe: 'resourceUrl'" frameborder="0"
-    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <p *ngIf="participant?.description" [innerHTML]="participant.description | safe: 'html'"></p>
+  <div class="iframe-container" *ngIf="participant?.video; else placeholder">
+    <iframe [src]="participant.video | safe: 'resourceUrl'" frameborder="0"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 </section>
 
-<mat-button-toggle-group name="Platzierung" aria-label="Platzierung" (change)="vote$.emit($event.value)" [value]="value">
+<mat-button-toggle-group name="Platzierung" aria-label="Platzierung" (change)="vote$.emit($event.value)"
+  [value]="value">
   <mat-button-toggle [value]="3">Platz 1</mat-button-toggle>
   <mat-button-toggle [value]="2">Platz 2</mat-button-toggle>
   <mat-button-toggle [value]="1">Platz 3</mat-button-toggle>
 </mat-button-toggle-group>
+
+<ng-template #placeholder>
+  <p class="coming-soon">Wir warten noch auf die Einsendung des Videos</p>
+</ng-template>
