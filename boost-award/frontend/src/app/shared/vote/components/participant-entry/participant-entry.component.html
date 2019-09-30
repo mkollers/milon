@@ -1,4 +1,5 @@
 <h2>{{ participant?.name }}</h2>
+<p class="city">{{ participant?.city }}</p>
 <section class="details">
   <div class="iframe-container" *ngIf="participant?.video; else placeholder">
     <iframe [src]="participant.video | safe: 'resourceUrl'" frameborder="0"
