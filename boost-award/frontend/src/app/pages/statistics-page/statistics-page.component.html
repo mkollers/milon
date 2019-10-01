@@ -1,0 +1,5 @@
+<ul *ngIf="participants$ | async as participants">
+  <li *ngFor="let statistic of statistics$ | async">
+    {{ participants[statistic.participantId].name }} - {{ statistic.value }}
+  </li>
+</ul>
