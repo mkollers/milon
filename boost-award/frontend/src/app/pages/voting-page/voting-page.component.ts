@@ -6,7 +6,7 @@ import { Token } from '@shared/data-access/models/token';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
 import { ParticipantService } from '@shared/data-access/services/participant.service';
 import { merge, Observable } from 'rxjs';
-import { first, map, skip, startWith, filter } from 'rxjs/operators';
+import { first, map, skip, startWith, filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'milon-voting-page',
@@ -42,6 +42,7 @@ export class VotingPageComponent {
         delete votes[i];
       }
     }
+    console.log(votes);
     const token = localStorage.getItem('token');
     await this._accessTokenService.vote(token, votes);
   }
@@ -77,6 +78,6 @@ export class VotingPageComponent {
   }
 
   finish() {
-    this.finished = true;
+    this._snackbar.open('Vielen Dank für deine Teilnahme am BOOST Award');
   }
 }
