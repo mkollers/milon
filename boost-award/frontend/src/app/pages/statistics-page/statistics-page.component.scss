@@ -19,12 +19,12 @@ li {
   min-width: 100px;
   display: inline-block;
   text-align: right;
-  width: 50%;
+  max-width: 50%;
   padding-right: 25px;
 }
 
 .name {
   color: #666;
-  width: 50%;
+  min-width: 50%;
   padding-left: 25px;
 }
