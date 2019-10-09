@@ -22,6 +22,7 @@ export class ValidTokenGuard implements CanActivate {
       this._snackbar.open('Es konnte kein gültiger Token gefunden werden. Bitte lassen Sie sich eine neue E-Mail zuschicken.', '',
         { duration: 20000 }
       );
+      (window as any).ga('send', 'event', 'no_token_found');
       this._router.navigate(['/']);
       return false;
     }
@@ -36,6 +37,10 @@ export class ValidTokenGuard implements CanActivate {
       switch (err.code) {
         case 'permission-denied':
           msg = 'Ihr Link ist leider abgelaufen. Bitte lassen Sie sich eine neue E-Mail zuschicken.';
+          (window as any).ga('send', 'event', 'token_expired');
+          break;
+        default:
+          (window as any).ga('send', 'event', 'no_token_found');
           break;
       }
       this._snackbar.open(msg, '', { duration: 20000 });
@@ -47,6 +52,7 @@ export class ValidTokenGuard implements CanActivate {
       this._snackbar.open('Es konnte kein gültiger Token gefunden werden. Bitte lassen Sie sich eine neue E-Mail zuschicken.', '', {
         duration: 20000
       });
+      (window as any).ga('send', 'event', 'no_token_found');
       this._router.navigate(['/']);
       return false;
     }

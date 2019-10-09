@@ -79,5 +79,6 @@ export class VotingPageComponent {
 
   finish() {
     this._snackbar.open('Vielen Dank für deine Teilnahme am BOOST Award');
+    (window as any).ga('send', 'event', 'finish_voting');
   }
 }

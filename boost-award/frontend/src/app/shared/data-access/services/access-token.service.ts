@@ -16,7 +16,10 @@ export class AccessTokenService {
     return this._db
       .collection('registrations')
       .doc(email)
-      .set({ url: 'https://www.boostaward.de/abstimmung/' });
+      .set({ url: 'https://www.boostaward.de/abstimmung/' })
+      .then(() => {
+        (window as any).ga('send', 'event', 'request access');
+      });
   }
 
   getByToken(token: string) {
@@ -37,6 +40,9 @@ export class AccessTokenService {
       .doc(token)
       .update({
         votes
+      })
+      .then(() => {
+        (window as any).ga('send', 'event', 'single_vote');
       });
   }
 }
