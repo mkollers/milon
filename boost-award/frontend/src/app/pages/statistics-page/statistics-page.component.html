@@ -1,5 +1,5 @@
 <ul *ngIf="participants$ | async as participants">
   <li [class]="'points-' + statistic.value" *ngFor="let statistic of statistics$ | async; let i = index">
-    {{ i + 1 }}. Platz - {{ participants[statistic.participantId].name }}
+    <strong class="position">{{ i + 1 }}. Platz</strong> <span class="name">{{ participants[statistic.participantId].name }}</span>
   </li>
 </ul>
