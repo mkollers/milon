@@ -4,13 +4,14 @@ import * as _ from 'lodash';
 import { Vote } from "./vote";
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const csvWriter = createCsvWriter({
-    path: 'Einzelabstimmungen.csv',
+    path: 'Abstimmungen.csv',
     header: [
         { id: 'email', title: 'Teilnehmer' },
-        { id: 'vote', title: 'Aufsteiger/Produktneuheit' },
-        { id: 'points', title: 'Punkte' }
+        { id: 'firstPlace', title: '1. Platz' },
+        { id: 'secondPlace', title: '2. Platz' },
+        { id: 'thirdPlace', title: '3. Platz' }
     ],
-    fieldDelimiter: ';'
+    fieldDelimiter: ','
 });
 
 initialize();
@@ -18,39 +19,26 @@ main();
 
 async function main() {
     const votings = await getVotings();
-    const companies = await getCompanies();
-    const products = await getProducts();
+    const participants = _.keyBy(await getParticipants(), p => p.id);
 
     const data = [];
 
     for (let token of votings) {
-        for (let companyId in token.company_votes) {
-            data.push({
-                email: token.email,
-                vote: _.find(companies, c => c.id === companyId).name,
-                points: token.company_votes[companyId]
-            });
-        }
-        for (let productId in token.product_votes) {
-            data.push({
-                email: token.email,
-                vote: _.find(products, p => p.id === productId).name,
-                points: token.product_votes[productId]
-            });
-        }
+        const first = participants[token.votes[3]];
+        const second = participants[token.votes[2]];
+        const third = participants[token.votes[1]];
+
+        data.push({
+            email: token.email,
+            firstPlace: first ? first.name : '',
+            secondPlace: second ? second.name : '',
+            thirdPlace: third ? third.name : ''
+        });
     }
 
     csvWriter
         .writeRecords(data)
         .then(() => console.log('The CSV file was written successfully'));
-}
-
-function getCompanies() {
-    return admin.firestore()
-        .collection('companies')
-        .get()
-        .then(result => result.docs)
-        .then(companies => companies.map(p => ({ id: p.id, name: p.data().name })));
 }
 
 function getVotings(): Promise<Vote[]> {
@@ -61,10 +49,10 @@ function getVotings(): Promise<Vote[]> {
         .then(votes => votes.map(v => new Vote(v.data())));
 }
 
-function getProducts() {
+function getParticipants(): Promise<any[]> {
     return admin.firestore()
-        .collection('products')
+        .collection('participants')
         .get()
         .then(result => result.docs)
-        .then(products => products.map(p => ({ id: p.id, name: p.data().name, company: p.data().company })));
+        .then(participants => participants.map(p => ({ id: p.id, ...p.data() })));
 }
