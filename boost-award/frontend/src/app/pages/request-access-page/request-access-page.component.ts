@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
@@ -11,10 +11,11 @@ import { AccessTokenService } from '@shared/data-access/services/access-token.se
 })
 export class RequestAccessPageComponent {
   fg: FormGroup;
+  message: string;
 
   constructor(
     private _accessTokenService: AccessTokenService,
-    private _snackbar: MatSnackBar,
+    private _changeDetectorRef: ChangeDetectorRef,
     fb: FormBuilder
   ) {
     this.fg = fb.group({
@@ -23,10 +24,11 @@ export class RequestAccessPageComponent {
   }
 
   async submit() {
+    this.fg.disable();
     try {
       const email: string = this.fg.value.email;
       await this._accessTokenService.register(email);
-      this._snackbar.open('Wir haben Ihnen soeben eine E-Mail gesendet.', '', { duration: 15000 });
+      this.message = 'Wir haben Ihnen soeben eine E-Mail gesendet.';
     } catch (err) {
       let message = 'Hoppla, da ist etwas schief gelaufen...';
       switch (err.code) {
@@ -37,8 +39,10 @@ export class RequestAccessPageComponent {
           console.error(err);
           break;
       }
-      this._snackbar.open(message, '', { duration: 10000 });
+      this.message = message;
     }
+    this.fg.enable();
+    this._changeDetectorRef.markForCheck();
   }
 
 }
