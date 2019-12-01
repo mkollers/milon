@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccessTokenService } from '@shared/data-access/services/access-token.service';
 
 @Component({
@@ -12,6 +11,7 @@ import { AccessTokenService } from '@shared/data-access/services/access-token.se
 export class RequestAccessPageComponent {
   fg: FormGroup;
   message: string;
+  isTerminated = new Date('2019-12-01T22:00:00.000Z') < new Date();
 
   constructor(
     private _accessTokenService: AccessTokenService,
