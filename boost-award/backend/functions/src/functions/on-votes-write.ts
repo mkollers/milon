@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { Dictionary } from 'lodash';
 
 export const OnVotesWrite = functions
     .region('europe-west1')
@@ -11,26 +10,22 @@ export const OnVotesWrite = functions
             const before = event.before.data() || {};
             const after = event.after.data() || {};
             // Cancel execution if no votes exist
-            if (!after || !after.votes) {
+            if (!after || !after.vote) {
                 return;
             }
 
-            await updateStatistics(before.votes || {}, after.votes || {});
+            await updateStatistics(before.vote, after.vote);
         } catch (err) {
             console.error(err)
         }
     });
 
-async function updateStatistics(before: Dictionary<string>, after: Dictionary<string>) {
-    for (let i = 1; i <= 3; i++) {
-        if (before[i] !== after[i]) {
-            if (before[i] !== undefined) {
-                await changeValue(before[i], i * -1);
-            }
-            if (after[i] !== undefined) {
-                await changeValue(after[i], i);
-            }
-        }
+async function updateStatistics(before: string | undefined, after: string | undefined) {
+    if (before !== undefined) {
+        await changeValue(before, -1);
+    }
+    if (after !== undefined) {
+        await changeValue(after, 1);
     }
 }
 
