@@ -12,11 +12,11 @@ export class AccessTokenService {
     private _db: AngularFirestore
   ) { }
 
-  register(email: string) {
+  register(email: string, url = 'https://www.boostaward.de/abstimmung/') {
     return this._db
       .collection('registrations')
       .doc(email)
-      .set({ url: 'https://www.boostaward.de/abstimmung/' })
+      .set({ url })
       .then(() => {
         (window as any).ga('send', 'event', 'request access');
       });
