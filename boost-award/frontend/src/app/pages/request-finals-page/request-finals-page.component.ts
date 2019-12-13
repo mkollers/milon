@@ -12,7 +12,7 @@ export class RequestFinalsPageComponent {
   fg: FormGroup;
   message: string;
   isTerminated = new Date('2019-12-14T14:30.00.000Z') < new Date();
-  isNotStarted = new Date('2019-12-14T13:00:00.000Z') > new Date();
+  isNotStarted = new Date('2019-12-10T13:00:00.000Z') > new Date();
 
   constructor(
     private _accessTokenService: AccessTokenService,
