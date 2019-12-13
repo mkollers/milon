@@ -1,16 +1,11 @@
 <p>
-  Du entscheidest, welche Gründer in das Finale des BOOST Award 2019 einziehen. Stimme jetzt ab und bestimme deine drei
-  Favoriten.<br>
-  So einfach geht es:<br>
-  1. Schau dir die Videos aller Bewerber an.<br>
-  2. Wer sind deine Favoriten? Wähle deinen Platz eins, zwei und drei indem du auf die Buttons direkt unter dem
-  jeweiligen Video klickst.<br><br>
-  Danke, dass du dich bei der Abstimmung der Top5 des milon BOOST Award beteiligst.
+  Du entscheidest, welcher Gründer das Finale des BOOST Award 2019 gewinnt. Stimme jetzt ab und wähle deinen Favoriten.<br>
+  Danke, dass du dich an der Abstimmung des milon BOOST Award beteiligst.
 </p>
 
 <ng-container *ngFor="let participant of participants$ | async">
   <milon-participant-entry [milon-participant]="participant" (milon-vote)="vote(participant, $event)"
-    [milon-votes]="votes$ | async"></milon-participant-entry>
+    [milon-vote]="vote$ | async"></milon-participant-entry>
 </ng-container>
 
 <ng-container *ngIf="voted$ | async">

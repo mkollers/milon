@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HelperModule } from '@shared/helper/helper.module';
 
 import { ParticipantEntryComponent } from './components/participant-entry/participant-entry.component';
@@ -13,7 +13,7 @@ import { ParticipantEntryComponent } from './components/participant-entry/partic
     HelperModule,
 
     // Material
-    MatButtonToggleModule
+    MatSlideToggleModule
   ]
 })
 export class VoteModule { }

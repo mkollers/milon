@@ -1,22 +1,28 @@
 <ng-container *ngIf="!isTerminated; else terminated">
-  <ng-container *ngIf="!message; else messageContainer">
-    <p>
-      Herzlich willkommen,<br><br>
-      zum BOOST Award. Nach Angabe deiner E-Mail Adresse senden wir dir einen Link zu, welcher dir
-      den Zugang zur Abstimmung ermöglicht.
-    </p>
-    <form [formGroup]="fg" (ngSubmit)="fg.valid && submit()">
-      <mat-form-field appearance="fill">
-        <mat-label>E-Mail Adresse</mat-label>
-        <input matInput formControlName="email" autocomplete="email" required>
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Zugang anfordern</button>
-    </form>
+  <ng-container *ngIf="!isNotStarted; else notStarted">
+    <ng-container *ngIf="!message; else messageContainer">
+      <p>
+        Herzlich willkommen,<br><br>
+        zum BOOST Award. Nach Angabe deiner E-Mail Adresse senden wir dir einen Link zu, welcher dir
+        den Zugang zur Abstimmung ermöglicht.
+      </p>
+      <form [formGroup]="fg" (ngSubmit)="fg.valid && submit()">
+        <mat-form-field appearance="fill">
+          <mat-label>E-Mail Adresse</mat-label>
+          <input matInput formControlName="email" autocomplete="email" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Zugang anfordern</button>
+      </form>
+    </ng-container>
   </ng-container>
 </ng-container>
 
 <ng-template #messageContainer>
   <p id="message">{{ message }}</p>
+</ng-template>
+
+<ng-template #notStarted>
+  <p>Vielen Dank für dein Interesse am BOOST Award. Die finale Abstimmung hat noch nicht begonnen.</p>
 </ng-template>
 
 <ng-template #terminated>

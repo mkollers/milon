@@ -34,12 +34,12 @@ export class AccessTokenService {
       );
   }
 
-  async vote(token: string, votes: { [points: number]: string }) {
+  async vote(token: string, vote: string | undefined) {
     return this._db
       .collection('access_tokens')
       .doc(token)
       .update({
-        votes
+        vote
       })
       .then(() => {
         (window as any).ga('send', 'event', 'single_vote');

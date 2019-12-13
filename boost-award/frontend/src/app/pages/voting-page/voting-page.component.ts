@@ -18,7 +18,7 @@ export class VotingPageComponent {
   participants$: Observable<Participant[]>;
   token$: Observable<Token>;
   voted$: Observable<boolean>;
-  votes$: Observable<{ [id: number]: string }>;
+  vote$: Observable<string | undefined>;
   finished = false;
 
   constructor(
@@ -29,22 +29,17 @@ export class VotingPageComponent {
   ) {
     this.token$ = this._queryToken();
     this.participants$ = this._queryParticipants();
-    this.votes$ = this._queryVotes();
+    this.vote$ = this._queryVote();
     this.voted$ = this._queryVoted();
   }
 
-  async vote(participant: Participant, points: number) {
-    const votes = await this.votes$.pipe(first()).toPromise();
-    for (let i = 1; i <= 3; i++) {
-      if (i === points) {
-        votes[i] = participant.id;
-      } else if (votes[i] === participant.id) {
-        delete votes[i];
-      }
-    }
-    console.log(votes);
+  async vote(participant: Participant, checked: boolean) {
     const token = localStorage.getItem('token');
-    await this._accessTokenService.vote(token, votes);
+    if (checked) {
+      await this._accessTokenService.vote(token, participant.id);
+    } else {
+      await this._accessTokenService.vote(token, null);
+    }
   }
 
   private _queryToken() {
@@ -60,20 +55,15 @@ export class VotingPageComponent {
     return merge(participants$, hotParticipants$);
   }
 
-  private _queryVotes = () => this.token$.pipe(
+  private _queryVote = () => this.token$.pipe(
     filter(data => !!data),
-    map(data => data.votes || {})
+    map(data => data.vote)
   )
 
   private _queryVoted() {
-    const points$ = this.votes$.pipe(
-      map(votes => Object.keys(votes)),
-      map(keys => keys.reduce((a, b) => +a + +b, 0)),
-      startWith(0)
-    );
-
-    return points$.pipe(
-      map(p => p >= 6)
+    return this.vote$.pipe(
+      map(vote => !!vote),
+      startWith(false)
     );
   }
 
