@@ -11,7 +11,7 @@ import { AccessTokenService } from '@shared/data-access/services/access-token.se
 export class RequestAccessPageComponent {
   fg: FormGroup;
   message: string;
-  isTerminated = new Date('2019-12-14T14:30:00.000Z') < new Date();
+  isTerminated = new Date('2019-12-15T14:30:00.000Z') < new Date();
   isNotStarted = new Date('2019-12-10T13:00:00.000Z') > new Date();
 
   constructor(
